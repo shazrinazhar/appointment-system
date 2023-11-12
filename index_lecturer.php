@@ -80,9 +80,9 @@ if (isset($_POST['appointmentId']) && isset($_POST['status'])) {
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Student</th>
-            <th scope="col">Time</th>
-            <th scope="col">Desc</th>
+            <th scope="col">Student Name</th>
+            <th scope="col">Time & Time</th>
+            <th scope="col">Description</th>
             <th scope="col">Status</th>
             <th scope="col">Action</th>
           </tr>
@@ -176,13 +176,12 @@ if (isset($_POST['appointmentId']) && isset($_POST['status'])) {
       });
     });
   </script>
-  <!-- Include jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
 
-<script>
-$(document).ready(function() {
-    // Update status when a dropdown option is selected
-    $('.dropdown-item').on('click', function() {
+      // Update status when a dropdown option is selected
+      $('.dropdown-item').on('click', function() {
         const status = $(this).data('status');
         const appointmentId = $(this).closest('tr').data('appointment-id');
 
@@ -190,28 +189,31 @@ $(document).ready(function() {
         $(this).closest('tr').find('.status-button').text(status);
 
         // Send an AJAX request to update the status
-        $.post('index_lecturer.php', { appointmentId: appointmentId, status: status }, function(response) {
-            // Handle the response if needed
+        $.post('index_lecturer.php', {
+          appointmentId: appointmentId,
+          status: status
+        }, function(response) {
+          // Handle the response if needed
         });
+      });
+
+      // Delete appointment when the delete button is clicked
+      $('.delete-button').on('click', function() {
+        const appointmentId = $(this).closest('tr').data('appointment-id');
+
+        // Remove the table row immediately
+        $(this).closest('tr').remove();
+
+        // Send an AJAX request to delete the appointment
+        $.post('index_lecturer.php', {
+          appointmentId: appointmentId,
+          deleteAppointment: 1
+        }, function(response) {
+          // Handle the response if needed
+        });
+      });
     });
-
-    // Delete appointment when the delete button is clicked
-$('.delete-button').on('click', function() {
-    const appointmentId = $(this).closest('tr').data('appointment-id');
-
-    // Remove the table row immediately
-    $(this).closest('tr').remove();
-
-    // Send an AJAX request to delete the appointment
-    $.post('index_lecturer.php', { appointmentId: appointmentId, deleteAppointment: 1 }, function(response) {
-        // Handle the response if needed
-    });
-});
-});
-</script>
-
-
-
+  </script>
 </body>
 
 </html>
