@@ -19,14 +19,10 @@ if (isset($_SESSION['user'])) {
         $full_name = $readrow['full_name'];
         $contact = $readrow['contact'];
     } else {
-        // Handle the case where the user doesn't exist in the database
-        // For example, you can redirect the user to the login page
         header("location: login.php");
         exit();
     }
 } else {
-    // Handle the case where the 'user' key is not set in the session
-    // For example, you can redirect the user to the login page
     header("location: login.php");
     exit();
 }
