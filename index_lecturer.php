@@ -53,7 +53,59 @@ if (isset($_POST['appointmentId']) && isset($_POST['status'])) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <title>Lecturer Dashboard</title>
+  <title>UIS Appointment System: Lecturer Dashboard</title>
+  <link rel="icon" type="image/png" href="uis.png">
+  <style>
+    body {
+      background-color: rgb(231, 232, 250);
+    }
+
+    header {
+      border-bottom: 1px solid #aaa9e5;
+    }
+
+    h1 {
+      color: rgba(50, 49, 151, 255);
+    }
+
+    h2 {
+      font-size: 2em;
+      color: rgba(50, 49, 151, 255);
+    }
+
+    table {
+      text-align: center;
+      color: rgba(50, 49, 151, 255);
+      justify-content: center;
+      box-shadow: 5px 5px 30px rgba(50, 49, 151, 0.2);
+    }
+
+    .table>tbody {
+      vertical-align: middle;
+    }
+
+    th {
+      background-color: white !important;
+      color: rgba(50, 49, 151, 255) !important;
+    }
+
+    td {
+      background-color: white !important;
+    }
+
+    td.color {
+      color: rgba(50, 49, 151, 255) !important;
+    }
+
+    .status-td {
+      font-weight: 500;
+    }
+
+    footer {
+      border-top: 1px solid #aaa9e5;
+      color: #7675d5;
+    }
+  </style>
 </head>
 
 <body>
@@ -62,26 +114,19 @@ if (isset($_POST['appointmentId']) && isset($_POST['status'])) {
 
   <div class="col-lg-8 mx-auto p-4 py-md-5">
 
-    <header class="d-flex align-items-center pt-5 pb-3 mb-5 border-bottom">
-      <h1>
-        <span style="font-weight: bolder;">
-          Hi lecturer! 👋🏼 <br>
-        </span>
-        <span>
-          <?php echo $full_name ?>
-        </span>
-      </h1>
+    <header class="d-flex align-items-center pt-5 pb-3 mb-5">
+      <h1 style="font-weight: bolder;">Welcome back, <?php echo $full_name ?> 👋🏼</h1>
     </header>
 
     <main class="pb-5">
 
-      <h2 class="text-body-emphasis">Appointment List</h2>
+      <h2 class="mb-4 text-center">Scheduled Appointment List</h2>
       <table class="table table-responsive table-hover">
         <thead>
           <tr>
-            <th scope="col">#</th>
+            <th scope="col"></th>
             <th scope="col">Student Name</th>
-            <th scope="col">Time & Time</th>
+            <th scope="col">Date & Time</th>
             <th scope="col">Description</th>
             <th scope="col">Status</th>
             <th scope="col">Action</th>
@@ -91,9 +136,9 @@ if (isset($_POST['appointmentId']) && isset($_POST['status'])) {
           <?php foreach ($appointments as $index => $appointment) { ?>
             <tr data-appointment-id="<?= $appointment['appointment_id'] ?>">
               <th scope="row"><?= $index + 1 ?></th>
-              <td><?= $appointment['student_name'] ?></td>
-              <td><?= date('d/m/Y, H:i', strtotime($appointment['datetime'])) ?></td>
-              <td><?= $appointment['desc'] ?></td>
+              <td class="color"><?= $appointment['student_name'] ?></td>
+              <td class="color"><?= date('d/m/Y, H:i', strtotime($appointment['datetime'])) ?></td>
+              <td class="color"><?= $appointment['desc'] ?></td>
               <td>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle btn-sm status-button" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-expanded="false">
@@ -121,7 +166,7 @@ if (isset($_POST['appointmentId']) && isset($_POST['status'])) {
 
     </main>
 
-    <footer class="pt-5 text-body-secondary border-top text-center">
+    <footer class="pt-5 text-center">
       Created by Shazrina for FYP &middot; &copy; 2023
     </footer>
 

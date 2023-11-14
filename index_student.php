@@ -99,34 +99,91 @@ if (isset($_GET['delete'])) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <title>Student Dashboard</title>
+  <title>UIS Appointment System: Student Dashboard</title>
+  <link rel="icon" type="image/png" href="uis.png">
+  <style>
+    body {
+      background-color: rgb(231, 232, 250);
+    }
+
+    header {
+      border-bottom: 1px solid #aaa9e5;
+    }
+
+    h1 {
+      color: rgba(50, 49, 151, 255);
+    }
+
+    h2 {
+      font-size: 2em;
+      color: rgba(50, 49, 151, 255);
+    }
+
+    table {
+      text-align: center;
+      color: rgba(50, 49, 151, 255);
+      justify-content: center;
+      box-shadow: 5px 5px 30px rgba(50, 49, 151, 0.2);
+    }
+
+    .table>tbody {
+      vertical-align: middle;
+    }
+
+    th {
+      background-color: white !important;
+      color: rgba(50, 49, 151, 255) !important;
+    }
+
+    td {
+      background-color: white !important;
+    }
+
+    td.color {
+      color: rgba(50, 49, 151, 255) !important;
+    }
+
+    .status-td {
+      font-weight: 500;
+    }
+
+    .form-select, .form-control {
+      color: rgba(50, 49, 151, 255);
+    }
+
+    .form-floating>label {
+      color: #aaa9e5;
+    }
+
+    .form-floating>.form-control-plaintext~label, .form-floating>.form-control:focus~label, .form-floating>.form-control:not(:placeholder-shown)~label, .form-floating>.form-select~label {
+      color: #aaa9e5;
+    }
+
+    footer {
+      border-top: 1px solid #aaa9e5;
+      color: #7675d5;
+    }
+  </style>
 </head>
 
 <body>
 
-  <!-- <?php include "navbar.php" ?> -->
+  <?php include "navbar.php" ?>
 
   <div class="col-lg-8 mx-auto p-4 py-md-5">
 
-    <header class="d-flex align-items-center pt-5 pb-3 mb-5 border-bottom">
-      <h1>
-        <span style="font-weight: bolder;">
-          Hi student! 👋🏼 <br>
-        </span>
-        <span>
-          <?php echo $full_name ?>
-        </span>
-      </h1>
+    <header class="d-flex align-items-center pt-5 pb-3 mb-5">
+      <h1 style="font-weight: bolder;">Welcome back, <?php echo $full_name ?> 👋🏼</h1>
     </header>
 
     <main>
 
       <section class="pb-2 mb-4">
-        <h2 class="text-body-emphasis">Appointment List</h2>
+        <h2 class="mb-4 text-center">Scheduled Appointment List</h2>
         <table class="table table-responsive table-hover">
           <thead>
             <tr>
-              <th scope="col">#</th>
+              <th scope="col"></th>
               <th scope="col">Lecturer Name</th>
               <th scope="col">Date & Time</th>
               <th scope="col">Description</th>
@@ -134,19 +191,20 @@ if (isset($_GET['delete'])) {
               <th scope="col">Action</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="table-group-divider">
             <?php foreach ($appointments as $index => $appointment) { ?>
               <tr data-appointment-id="<?= $appointment['appointment_id'] ?>">
                 <th scope="row"><?= $index + 1 ?></th>
-                <td><?= $appointment['lecturer_name'] ?></td>
-                <td><?= date('d/m/Y, h:i A', strtotime($appointment['datetime'])) ?></td>
-                <td><?= $appointment['desc'] ?></td>
+                <td class="color"><?= $appointment['lecturer_name'] ?></td>
+                <td class="color"><?= date('d/m/Y, h:i A', strtotime($appointment['datetime'])) ?></td>
+                <td class="color"><?= $appointment['desc'] ?></td>
                 <td class="status-td"><?= $appointment['status'] ?></td>
                 <td>
                   <a href="index_student.php?edit=<?= $appointment['appointment_id']; ?>" class="btn btn-outline-secondary btn-sm" role="button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 20">
                       <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
                     </svg>
+                    Update
                   </a>
                   <a href="index_student.php?delete=<?= $appointment['appointment_id']; ?>" class="btn btn-danger btn-sm" role="button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
@@ -162,7 +220,8 @@ if (isset($_GET['delete'])) {
       </section>
 
       <section class="pb-4">
-        <h2 class="text-body-emphasis">Request new appointment or update existing appointments</h2>
+        <h2 class="text-center"><?php echo isset($_GET['edit']) ? 'Update Appointment' : 'Schedule New Appointment'; ?></h2>
+
         <form action="index_student.php" method="post" class="row justify-content-start" id="appointment-form">
           <div class="col-md-6">
             <div class="form-floating mb-2 mt-4">
@@ -226,7 +285,7 @@ if (isset($_GET['delete'])) {
                     <path d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5z" />
                     <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z" />
                   </svg>
-                  Request
+                  Add
                 </button>
               <?php } ?>
             </div>
@@ -236,7 +295,7 @@ if (isset($_GET['delete'])) {
 
     </main>
 
-    <footer class="pt-5 text-body-secondary border-top text-center">
+    <footer class="pt-5 text-center">
       Created by Shazrina for FYP &middot; &copy; 2023
     </footer>
 
