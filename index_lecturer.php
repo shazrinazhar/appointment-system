@@ -73,11 +73,26 @@ if (isset($_POST['appointmentId']) && isset($_POST['status'])) {
       color: rgba(50, 49, 151, 255);
     }
 
+    .card {
+      box-shadow: 5px 5px 30px rgba(50, 49, 151, 0.2);
+    }
+
+    .input-group-text {
+      color: rgba(50, 49, 151, 255);
+    }
+
+    .input-group input {
+      color: rgba(50, 49, 151, 255) !important;
+    }
+
+    .input-group input::placeholder {
+      color:#7675d5;
+    }
+
     table {
       text-align: center;
       color: rgba(50, 49, 151, 255);
       justify-content: center;
-      box-shadow: 5px 5px 30px rgba(50, 49, 151, 0.2);
     }
 
     .table>tbody {
@@ -121,48 +136,55 @@ if (isset($_POST['appointmentId']) && isset($_POST['status'])) {
     <main class="pb-5">
 
       <h2 class="mb-4 text-center">Scheduled Appointment List</h2>
-      <table class="table table-responsive table-hover">
-        <thead>
-          <tr>
-            <th scope="col"></th>
-            <th scope="col">Student Name</th>
-            <th scope="col">Date & Time</th>
-            <th scope="col">Description</th>
-            <th scope="col">Status</th>
-            <th scope="col">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ($appointments as $index => $appointment) { ?>
-            <tr data-appointment-id="<?= $appointment['appointment_id'] ?>">
-              <th scope="row"><?= $index + 1 ?></th>
-              <td class="color"><?= $appointment['student_name'] ?></td>
-              <td class="color"><?= date('d/m/Y, H:i', strtotime($appointment['datetime'])) ?></td>
-              <td class="color"><?= $appointment['desc'] ?></td>
-              <td>
-                <div class="dropdown">
-                  <button class="btn dropdown-toggle btn-sm status-button" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    <?= $appointment['status'] ?>
-                  </button>
-                  <ul class="dropdown-menu" aria-labelledby="statusDropdown">
-                    <li><a class="dropdown-item" href="#" data-status="Pending">Pending</a></li>
-                    <li><a class="dropdown-item" href="#" data-status="Approve">Approve</a></li>
-                    <li><a class="dropdown-item" href="#" data-status="Decline">Decline</a></li>
-                  </ul>
-                </div>
-              </td>
-              <td>
-                <a href="" class="btn btn-danger btn-sm delete-button" role="button" data-appointment-id="<?= $appointment['appointment_id'] ?>">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
-                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
-                  </svg>
-                </a>
-              </td>
+      <div class="card p-4">
+        <div class="input-group">
+          <span class="input-group-text">Search</span>
+          <input type="text" class="form-control" id="search" placeholder="student name" name="search">
+        </div>
+        <table class="table table-responsive table-hover">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Student Name</th>
+              <th scope="col">Date & Time</th>
+              <th scope="col">Description</th>
+              <th scope="col">Status</th>
+              <th scope="col">Action</th>
             </tr>
-          <?php } ?>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <?php foreach ($appointments as $index => $appointment) { ?>
+              <tr data-appointment-id="<?= $appointment['appointment_id'] ?>">
+                <th scope="row"><?= $index + 1 ?></th>
+                <td class="color"><?= $appointment['student_name'] ?></td>
+                <td class="color"><?= date('d/m/Y, H:i', strtotime($appointment['datetime'])) ?></td>
+                <td class="color"><?= $appointment['desc'] ?></td>
+                <td>
+                  <div class="dropdown">
+                    <button class="btn dropdown-toggle btn-sm status-button" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                      <?= $appointment['status'] ?>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="statusDropdown">
+                      <li><a class="dropdown-item" href="#" data-status="Pending">Pending</a></li>
+                      <li><a class="dropdown-item" href="#" data-status="Approve">Approve</a></li>
+                      <li><a class="dropdown-item" href="#" data-status="Decline">Decline</a></li>
+                    </ul>
+                  </div>
+                </td>
+                <td>
+                  <a href="" class="btn btn-danger btn-sm delete-button" role="button" data-appointment-id="<?= $appointment['appointment_id'] ?>">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
+                      <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
+                    </svg>
+                  </a>
+                </td>
+              </tr>
+            <?php } ?>
+          </tbody>
+        </table>
+      </div>
+
 
     </main>
 
@@ -255,6 +277,24 @@ if (isset($_POST['appointmentId']) && isset($_POST['status'])) {
           deleteAppointment: 1
         }, function(response) {
           // Handle the response if needed
+        });
+      });
+    });
+  </script>
+  <script>
+    $(document).ready(function() {
+      $("#search").on("input", function() {
+        var searchText = $(this).val().toLowerCase();
+
+        $("tbody tr").each(function() {
+          var lecturerName = $(this).find(".color").text().toLowerCase();
+
+          // Show or hide the row based on the search
+          if (lecturerName.includes(searchText)) {
+            $(this).show();
+          } else {
+            $(this).hide();
+          }
         });
       });
     });
