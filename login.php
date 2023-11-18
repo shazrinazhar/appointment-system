@@ -17,7 +17,9 @@ try {
       );
       $count = $stmt->rowCount();
 
-      if ($count > 0) {
+      if ($count == 0) {
+        $message = "<label>Invalid email or password! Please try again.</label>";
+      } elseif ($count > 0) {
         $user = $stmt->fetch();
 
         $_SESSION['user'] = $user['user_id'];
@@ -53,18 +55,24 @@ try {
     body {
       background-color: rgb(231, 232, 250);
     }
+
     h1 {
       color: rgba(50, 49, 151, 255);
     }
+
     p {
       color: rgba(50, 49, 151, 255);
     }
+
     form {
       box-shadow: 5px 5px 50px rgba(50, 49, 151, 0.5);
       backdrop-filter: blur(25px);
     }
 
-    .form-floating>.form-control-plaintext~label, .form-floating>.form-control:focus~label, .form-floating>.form-control:not(:placeholder-shown)~label, .form-floating>.form-select~label {
+    .form-floating>.form-control-plaintext~label,
+    .form-floating>.form-control:focus~label,
+    .form-floating>.form-control:not(:placeholder-shown)~label,
+    .form-floating>.form-select~label {
       color: #aaa9e5;
     }
 
@@ -75,17 +83,23 @@ try {
 
     .sign {
       text-align: center;
-      color: #9898e0;
     }
+
     .btn {
-      background-color: rgb(112,112,234);
+      background-color: rgb(112, 112, 234);
       color: white;
     }
+
     .btn:hover {
-      background-color: rgb(84,83,203);
+      background-color: rgb(84, 83, 203);
       color: white;
     }
-    label {
+
+    label[for="floatingInput"] {
+      color: rgba(50, 49, 151, 255);
+    }
+
+    label[for="floatingPassword"] {
       color: rgba(50, 49, 151, 255);
     }
   </style>
@@ -110,7 +124,11 @@ try {
           </div>
           <button class="w-100 btn btn-lg" type="submit" name="login">Sign in</button>
           <hr class="my-4">
-          <p class="sign">Sign in to get started.</p>
+          <p class="sign" style="color: <?php echo ($message === "Sign in to get started.") ? 'red' : 'red'; ?>">
+            <?php
+            echo isset($message) ? $message : "Sign in to get started.";
+            ?>
+          </p>
         </form>
       </div>
     </div>

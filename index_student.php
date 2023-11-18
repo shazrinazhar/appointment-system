@@ -119,11 +119,26 @@ if (isset($_GET['delete'])) {
       color: rgba(50, 49, 151, 255);
     }
 
+    .card {
+      box-shadow: 5px 5px 30px rgba(50, 49, 151, 0.2);
+    }
+
+    .input-group-text {
+      color: rgba(50, 49, 151, 255);
+    }
+
+    .input-group input {
+      color: rgba(50, 49, 151, 255) !important;
+    }
+
+    .input-group input::placeholder {
+      color:#7675d5;
+    }
+
     table {
       text-align: center;
       color: rgba(50, 49, 151, 255);
       justify-content: center;
-      box-shadow: 5px 5px 30px rgba(50, 49, 151, 0.2);
     }
 
     .table>tbody {
@@ -147,7 +162,8 @@ if (isset($_GET['delete'])) {
       font-weight: 500;
     }
 
-    .form-select, .form-control {
+    .form-select,
+    .form-control {
       color: rgba(50, 49, 151, 255);
     }
 
@@ -155,7 +171,10 @@ if (isset($_GET['delete'])) {
       color: #aaa9e5;
     }
 
-    .form-floating>.form-control-plaintext~label, .form-floating>.form-control:focus~label, .form-floating>.form-control:not(:placeholder-shown)~label, .form-floating>.form-select~label {
+    .form-floating>.form-control-plaintext~label,
+    .form-floating>.form-control:focus~label,
+    .form-floating>.form-control:not(:placeholder-shown)~label,
+    .form-floating>.form-select~label {
       color: #aaa9e5;
     }
 
@@ -180,43 +199,50 @@ if (isset($_GET['delete'])) {
 
       <section class="pb-2 mb-4">
         <h2 class="mb-4 text-center">Scheduled Appointment List</h2>
-        <table class="table table-responsive table-hover">
-          <thead>
-            <tr>
-              <th scope="col"></th>
-              <th scope="col">Lecturer Name</th>
-              <th scope="col">Date & Time</th>
-              <th scope="col">Description</th>
-              <th scope="col">Status</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody class="table-group-divider">
-            <?php foreach ($appointments as $index => $appointment) { ?>
-              <tr data-appointment-id="<?= $appointment['appointment_id'] ?>">
-                <th scope="row"><?= $index + 1 ?></th>
-                <td class="color"><?= $appointment['lecturer_name'] ?></td>
-                <td class="color"><?= date('d/m/Y, h:i A', strtotime($appointment['datetime'])) ?></td>
-                <td class="color"><?= $appointment['desc'] ?></td>
-                <td class="status-td"><?= $appointment['status'] ?></td>
-                <td>
-                  <a href="index_student.php?edit=<?= $appointment['appointment_id']; ?>" class="btn btn-outline-secondary btn-sm" role="button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 20">
-                      <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-                    </svg>
-                    Update
-                  </a>
-                  <a href="index_student.php?delete=<?= $appointment['appointment_id']; ?>" class="btn btn-danger btn-sm" role="button">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
-                      <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
-                    </svg>
-                  </a>
-                </td>
+        <div class="card p-4">
+          <div class="input-group">
+            <span class="input-group-text">Search</span>
+            <input type="text" class="form-control" id="search" placeholder="lecturer name" name="search">
+          </div>
+          <table class="table table-responsive table-hover">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Lecturer Name</th>
+                <th scope="col">Date & Time</th>
+                <th scope="col">Description</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
               </tr>
-            <?php } ?>
-          </tbody>
-        </table>
+            </thead>
+            <tbody class="table-group-divider">
+              <?php foreach ($appointments as $index => $appointment) { ?>
+                <tr data-appointment-id="<?= $appointment['appointment_id'] ?>">
+                  <th scope="row"><?= $index + 1 ?></th>
+                  <td class="color"><?= $appointment['lecturer_name'] ?></td>
+                  <td class="color"><?= date('d/m/Y, h:i A', strtotime($appointment['datetime'])) ?></td>
+                  <td class="color"><?= $appointment['desc'] ?></td>
+                  <td class="status-td"><?= $appointment['status'] ?></td>
+                  <td>
+                    <a href="index_student.php?edit=<?= $appointment['appointment_id']; ?>" class="btn btn-outline-secondary btn-sm" role="button">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 20">
+                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                      </svg>
+                      Update
+                    </a>
+                    <a href="index_student.php?delete=<?= $appointment['appointment_id']; ?>" class="btn btn-danger btn-sm" role="button">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
+                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
+                      </svg>
+                    </a>
+                  </td>
+                </tr>
+              <?php } ?>
+            </tbody>
+          </table>
+        </div>
+
       </section>
 
       <section class="pb-4">
@@ -265,12 +291,7 @@ if (isset($_GET['delete'])) {
             </div>
             <div class="d-flex justify-content-end">
               <!-- Show "Update" or "Create" button based on the form content -->
-              <button type="reset" class="btn btn-outline-danger btn-lg me-2" id="resetButton">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 20">
-                  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
-                  <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
-                </svg>
-              </button>
+              <button type="reset" class="btn btn-outline-danger me-2" id="resetButton">Reset</button>
               <?php if (isset($_GET['edit'])) { ?>
                 <input type="hidden" name="appointment_id" value="<?php echo $editresult['appointment_id']; ?>">
                 <button class="btn btn-warning" type="submit" name="update" id="updateButton">
@@ -323,6 +344,24 @@ if (isset($_GET['delete'])) {
   <script>
     document.getElementById('resetButton').addEventListener('click', function() {
       window.location.href = 'index_student.php';
+    });
+  </script>
+  <script>
+    $(document).ready(function() {
+      $("#search").on("input", function() {
+        var searchText = $(this).val().toLowerCase();
+
+        $("tbody tr").each(function() {
+          var lecturerName = $(this).find(".color").text().toLowerCase();
+
+          // Show or hide the row based on the search
+          if (lecturerName.includes(searchText)) {
+            $(this).show();
+          } else {
+            $(this).hide();
+          }
+        });
+      });
     });
   </script>
 
